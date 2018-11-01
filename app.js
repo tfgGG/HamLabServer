@@ -14,7 +14,6 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const {sequelize} = require('./lib/models/')
 const cors=require('cors')
-const config = require('./lib/config')
 
 const client = require("redis").createClient(process.env.REDIS_URL);
 //const Redis = require('ioredis')
