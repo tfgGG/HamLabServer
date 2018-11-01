@@ -16,9 +16,10 @@ const {sequelize} = require('./lib/models/')
 const cors=require('cors')
 const config = require('./lib/config')
 
-const client = require("redis").createClient();
-const Redis = require('ioredis')
-const redis = new Redis(process.env.REDIS_URL)
+const client = require("redis").createClient(process.env.REDIS_URL);
+//const Redis = require('ioredis')
+//const url = require('url')
+//const redis = new Redis(url.parse())
 
 console.log(process.env.REDIS_URL)
 
