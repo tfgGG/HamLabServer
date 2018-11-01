@@ -4,11 +4,8 @@ var http = require('http');
 const https = require('https');
 //const http = require('http').Server(app)
 //var server = app.listen(app.get('port'))
-var server = http.createServer(app).listen(3000);
+var server = http.createServer(app).listen(process.env.PORT||3000);
 var io = require('socket.io')(server);
-server.listen(3000, function() {
-    console.log('Listenging on port 3000');
-});
 
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
@@ -27,6 +24,12 @@ app.set('port',process.env.PORT||3000);
 app.use(bodyParser.json());   
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use(cors()); 
+
+server.listen(app.get('port'), function() {
+    console.log('Listenging on port'+ app.get('port'));
+});
+
+
 /*
 app.listen(app.get('port'),()=>{
     console.log("Working on http://localhost:"+ app.get('port')+"/");
