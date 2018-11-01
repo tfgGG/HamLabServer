@@ -40,10 +40,6 @@ app.use(function(req,res){
     res.send('404-NotFound');
 })
 
-app.get('/',function(req,res){
-    res.send("Hello World")
-})
-
 sequelize
   .authenticate()
   .then(() => {
