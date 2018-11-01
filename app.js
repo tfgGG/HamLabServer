@@ -20,6 +20,8 @@ const client = require("redis").createClient();
 const Redis = require('ioredis')
 const redis = new Redis(process.env.REDIS_URL)
 
+console.log(process.env.REDIS_URL)
+
 
 app.set('port',process.env.PORT||3000);
 app.use(bodyParser.json());   
