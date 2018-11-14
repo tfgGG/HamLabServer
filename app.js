@@ -2,22 +2,15 @@ const express = require('express');
 const app = express()
 var http = require('http');
 const https = require('https');
-//const http = require('http').Server(app)
-//var server = app.listen(app.get('port'))
 var server = http.createServer(app).listen(process.env.PORT||3000);
 var io = require('socket.io')(server);
+const {promisify} = require('util');
 
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const {sequelize} = require('./lib/models/')
 const cors=require('cors')
 
-const client = require("redis").createClient(process.env.REDIS_URL);
-//const Redis = require('ioredis')
-//const url = require('url')
-//const redis = new Redis(url.parse())
-
-console.log(process.env.REDIS_URL)
 
 
 app.set('port',process.env.PORT||3000);
@@ -25,15 +18,22 @@ app.use(bodyParser.json());
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 app.use(cors()); 
 
+var client = null
+if(process.env.REDIS_URL != null){
+    client = require("redis").createClient(process.env.REDIS_URL || 3000)
+}
+else{
+    client =  require("redis").createClient();
+}
+var getAsync = promisify(client.get).bind(client)
+var redisasync = require('./lib/socket/AsyncRedis')
+redisasync.setClient(getAsync)
+
+
 server.listen(app.get('port'), function() {
     console.log('Listenging on port'+ app.get('port'));
 });
 
-
-/*
-app.listen(app.get('port'),()=>{
-    console.log("Working on http://localhost:"+ app.get('port')+"/");
-});*/
 require("./lib/route")(app)
 require("./lib/socket/game")(io,client)
 
