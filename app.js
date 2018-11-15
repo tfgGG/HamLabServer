@@ -12,6 +12,7 @@ const {sequelize} = require('./lib/models/')
 const cors=require('cors')
 
 
+io.origins(['https://secret-coast-70665.herokuapp.com/','http://localhost:8080/']);
 
 app.set('port',process.env.PORT||3000);
 app.use(bodyParser.json());   
