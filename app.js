@@ -3,7 +3,7 @@ const app = express()
 var http = require('http');
 const https = require('https');
 var server = http.createServer(app).listen(process.env.PORT||3000);
-var io = require('socket.io')(server);
+var io = require('socket.io')(server,{ origins: '*:*'});
 const {promisify} = require('util');
 
 const bodyParser = require('body-parser')
@@ -12,7 +12,7 @@ const {sequelize} = require('./lib/models/')
 const cors=require('cors')
 
 
-io.origins(['https://secret-coast-70665.herokuapp.com/','http://localhost:8080/']);
+//io.origins(['https://secret-coast-70665.herokuapp.com:*','http://localhost:8080/']);
 
 app.set('port',process.env.PORT||3000);
 app.use(bodyParser.json());   
@@ -37,6 +37,7 @@ server.listen(app.get('port'), function() {
 
 require("./lib/route")(app)
 require("./lib/socket/game")(io,client)
+require("./lib/socket/matching")(io,client)
 
 app.use(function(req,res){
     res.status(404);
