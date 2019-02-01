@@ -2,8 +2,12 @@ const express = require('express');
 const app = express()
 var http = require('http');
 const https = require('https');
+
 var server = http.createServer(app).listen(process.env.PORT||3000);
 var io = require('socket.io')(server,{ origins: '*:*'});
+const redisAdapter = require('socket.io-redis');
+
+
 const {promisify} = require('util');
 
 const bodyParser = require('body-parser')
@@ -22,18 +26,20 @@ app.use(cors());
 var client = null
 if(process.env.REDIS_URL != null){
     client = require("redis").createClient(process.env.REDIS_URL || 3000)
+    io.adapter(redisAdapter(process.env.REDIS_URL))
 }
 else{
     client =  require("redis").createClient();
+    io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
 }
 var getAsync = promisify(client.get).bind(client)
 var redisasync = require('./lib/socket/AsyncRedis')
 redisasync.setClient(getAsync)
 
-
+/*
 server.listen(app.get('port'), function() {
     console.log('Listenging on port'+ app.get('port'));
-});
+});*/
 
 require("./lib/route")(app)
 require("./lib/socket/game")(io,client)
