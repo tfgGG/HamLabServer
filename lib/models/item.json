@@ -1,0 +1,48 @@
+{
+    "q":[
+        {
+            "name":"房子",
+            "points":10,
+            "answer": 0,
+            "time": 0,
+            "discription":"這是一個房子",
+            "pic":"house.png"
+        },
+        {
+            "name":"翹翹板",
+            "points":20,
+            "answer": 0,
+            "time": 0,
+            "discription":"這是一個翹翹板摔死減掉20",
+            "pic": "seesaw.png"
+
+        },
+        {
+            "name":"瓜瓜",
+            "points":-30,
+            "answer": 0,
+            "time": 0,
+            "discription":"這是一個瓜瓜吃完後增加30",
+            "pic":"sunflower.png"
+        },
+        {
+            "name":"輪輪",
+            "points":0,
+            "answer": 0,
+            "time": -3,
+            "discription":"這是一個輪輪",
+            "pic":"sunflower.png"
+        },
+        {
+            "name":"鞦韆",
+            "points":0,
+            "answer": 1,
+            "time": 0,
+            "discription":"這是一個鞦韆，answer 1 ",
+            "pic":"sunflower.png"
+        }
+
+    ]
+
+
+}
